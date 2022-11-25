@@ -1,18 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Album } from 'src/app/models/albums';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Album } from "src/app/models/albums";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AlbumsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   static baseUri = `${environment.endpoint}/albums`;
 
   getAlbums() {
     return this.http.get<Album[]>(AlbumsService.baseUri);
+  }
+
+  getAlbum(id: number | string) {
+    console.trace(id);
+    return this.http.get<Album>(`${AlbumsService.baseUri}/${id}`);
   }
 }
