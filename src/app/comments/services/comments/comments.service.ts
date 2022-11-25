@@ -11,7 +11,7 @@ export class CommentsService {
   constructor(private http: HttpClient) { }
 
   getComments() {
-    const url = `${environment.endpoint}/comments`;
+    const url = `${environment.endpoint}/commentss`;
     return this.http.get<Comment[]>(url);
   }
 }

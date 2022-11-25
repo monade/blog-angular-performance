@@ -4,7 +4,10 @@ import { CommonModule } from '@angular/common';
 import { CommentsRoutingModule } from './comments-routing.module';
 import { CommentsComponent } from './pages/comments/comments.component';
 import { CommentsListComponent } from './components/comments-list/comments-list.component';
-import {CommentsService} from "./services/comments/comments.service";
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+import {commentsReducer} from "./store/reducers/comments.reducer";
+import {CommentsEffects} from "./store/effects/comments.effects";
 
 
 @NgModule({
@@ -14,7 +17,9 @@ import {CommentsService} from "./services/comments/comments.service";
   ],
   imports: [
     CommonModule,
-    CommentsRoutingModule
+    CommentsRoutingModule,
+    StoreModule.forFeature('comments', commentsReducer),
+    EffectsModule.forFeature([ CommentsEffects ])
   ]
 })
 export class CommentsModule { }

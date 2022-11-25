@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {Comment} from "../../../models/comment";
-import {environment} from "../../../../environments/environment";
-import {EMPTY, filter, map, Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {CommentsService} from "../../services/comments/comments.service";
-import {CommentsStoreService} from "../../services/comments-store/comments-store.service";
+import {Store} from "@ngrx/store";
+import {getCommentsAction} from "../../store/actions/comments.actions";
+import {getComments} from "../../store/selectors/comments.selectors";
 
 @Component({
   selector: 'app-comments',
@@ -14,14 +14,14 @@ import {CommentsStoreService} from "../../services/comments-store/comments-store
 })
 export class CommentsComponent implements OnInit {
 
-  comments$: Observable<Comment[]> = this.commentsStoreService.comments$.pipe(
-    map(comments => comments.filter(comment => comment.email.includes('.biz')))
-  );
+  comments$: Observable<Comment[]> = this.store.select(getComments);
 
-  constructor(private commentsService: CommentsService, private commentsStoreService: CommentsStoreService) {}
+  constructor(
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
-    this.commentsService.getComments().subscribe(comments => this.commentsStoreService.setComments(comments));
+    this.store.dispatch(getCommentsAction());
   }
 
 }
