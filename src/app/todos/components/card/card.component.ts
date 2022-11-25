@@ -11,7 +11,7 @@ import { Todo } from "src/app/models/todo";
         <p *ngIf="!todo.completed">Da fare *.*</p>
       </div>
       <div class="card-footer">
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" (click)="onTodoDeleted()">Delete</button>
       </div>
     </div>
   `,
@@ -21,9 +21,14 @@ export class CardComponent {
   @Input() todo!: Todo;
 
   @Output() todoChanged = new EventEmitter<Todo>();
+  @Output() todoDeleted = new EventEmitter<void>();
 
   onTitleChange(e: any) {
     console.log(e);
     this.todoChanged.emit({ ...this.todo, title: e?.target?.value });
+  }
+
+  onTodoDeleted() {
+    this.todoDeleted.emit();
   }
 }
