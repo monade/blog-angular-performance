@@ -18,6 +18,9 @@ import { Component } from '@angular/core';
             <li class="nav-item">
               <a routerLink="comments" routerLinkActive="active" class="nav-link" href="#">Comments</a>
             </li>
+            <li class="nav-item">
+              <a routerLink="albums" routerLinkActive="active" class="nav-link" href="#">Albums</a>
+            </li>
           </ul>
         </div>
       </div>
