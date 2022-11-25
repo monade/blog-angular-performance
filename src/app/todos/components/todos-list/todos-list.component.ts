@@ -1,25 +1,22 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Todo } from 'src/app/models/todo';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
+import { Todo } from "src/app/models/todo";
 
 @Component({
-  selector: 'app-todos-list',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: "app-todos-list",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-		<div *ngIf="todos">
-			<div *ngFor="let todo of todos" class="card mb-3">
-				<div class="card-body">
-					<h5>{{ todo.title }}</h5>
-					<p *ngIf="todo.completed">Fatto!</p>
-					<p *ngIf="! todo.completed">Da fare *.*</p>
-				</div>
-			</div>
-		</div>
+    <ng-container *ngIf="todos">
+      <app-card *ngFor="let todo of todos" [todo]="todo" (todoChanged)="onTodoChanged($event)"></app-card>
+    </ng-container>
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class TodosListComponent {
+  @Input() todos: Todo[] | null = null;
 
-	@Input() todos: Todo[] | null = null
+  @Output() todoChanged = new EventEmitter<Todo>();
 
+  onTodoChanged(todo: Todo) {
+    this.todoChanged.emit(todo);
+  }
 }
