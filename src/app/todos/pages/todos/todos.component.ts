@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Todo } from "src/app/models/todo";
+import {Store} from "@ngrx/store";
+import {getTodosAction, getTodosSuccessAction} from "../../store/actions/todos.actions";
 
 @Component({
   selector: "app-todos",
@@ -48,7 +50,12 @@ export class TodosComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  constructor(private store: Store) {
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(getTodosSuccessAction({ todos: this.todos }));
+  }
 
   onTodoChanged(todo: Todo) {
     this.todos = this.todos.map(t => (t.id === todo.id ? todo : t));
